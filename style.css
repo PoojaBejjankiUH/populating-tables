@@ -1,0 +1,260 @@
+
+body {
+    background: #1d2630;
+}
+
+* {
+    color: #850d0d;
+  
+} 
+
+::placeholder {
+    color: rgb(12, 12, 12) !important;
+}
+select option {
+    color: rgb(107, 18, 7);
+}
+
+.form-text.text-muted {
+    color: white;
+}
+    
+select option {
+    color: maroon;
+}
+#update {
+    display:none;
+}
+
+.container1{
+    height: 550px; 
+    overflow-y: scroll ;
+}
+.container{
+    margin: 10px; 
+  
+}
+/* Add styles for the new elements */
+#academicMapsTab {
+    margin-top: 20px;
+}
+
+#mapTabs {
+    margin-bottom: 20px;
+}
+
+.map-tab {
+    margin-right: 5px;
+}
+
+/* Ensure to include these styles in your style.css or a separate file linked in your HTML */
+
+/* Navigation Buttons */
+.nav-buttons {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .nav-buttons button {
+    padding: 10px;
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .nav-buttons button:hover {
+    background-color: #555;
+  }
+  
+  /* Map Form and Content */
+  #addMapContent, #createMapForm {
+    margin-top: 20px;
+    padding: 20px;
+    background: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  #addMapContent h2, #createMapForm h2 {
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  #addMapContent .form-control, #createMapForm .form-control {
+    margin-bottom: 10px;
+    border-radius: 5px;
+  }
+  
+  #addMapContent .btn, #createMapForm .btn {
+    border-radius: 5px;
+  }
+  
+.year-container {
+  display: inline-flex;
+  width: 100%;
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.year-label {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  background-color: #333;
+  color: white;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+  border-right: 1px solid #ddd;
+}
+
+.semester-container {
+  flex: 1;
+  padding: 10px;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin-bottom: 10px;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+  height: 20px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+th {
+  background-color: #f4f4f4;
+  color: black;
+  font-weight: 500;
+}
+
+tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.clickable {
+  cursor: pointer;
+  color: black;
+}
+
+.clickable:hover {
+  text-decoration: underline;
+}
+
+.total-credits {
+  font-weight: 700;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+  transition: all 0.3s ease-in-out;
+}
+
+.modal-content {
+  background-color: #fff;
+  margin: 10% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 60%;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  transition: all 0.3s ease-in-out;
+}
+
+#contact-hours {
+  font-style: italic;
+}
+
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Add this section to styles.css */
+.available-courses {
+  margin-top: 20px;
+  width: 100%;
+  max-width: 1400px;
+}
+
+.available-courses h2, .available-courses h3 {
+  text-align: center;
+}
+
+.available-courses table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.available-courses th, .available-courses td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+}
+
+.available-courses th {
+  background-color: #f4f4f4;
+  font-weight: bold;
+}
+
+.available-courses td {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.available-courses form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.available-courses form label, .available-courses form input, .available-courses form textarea {
+  width: 80%;
+  margin-bottom: 10px;
+}
+
+.available-courses form button {
+  padding: 10px 20px;
+  background-color: #333;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.available-courses form button:hover {
+  background-color: #555;
+}

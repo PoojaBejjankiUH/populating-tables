@@ -1,0 +1,27 @@
+.nav-tabs {
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid #ddd;
+    margin-right: 20px;
+}
+.tab-content {
+    flex-grow: 1;
+}
+
+#no-programs-found {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+#programInputContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1rem;
+}
+#programInputContainer input {
+    margin-right: 10px;
+    width: auto;
+}
