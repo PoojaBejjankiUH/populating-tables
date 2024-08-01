@@ -204,6 +204,7 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
+    
     // Add course to the academic map
     document.getElementById('add-course-button').addEventListener('click', addCourseToAcademicMap);
 
