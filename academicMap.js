@@ -1,10 +1,6 @@
-let academicMaps = {
-    programs: []
-}
-let anyProgramsSaved = false;
-const programs = [];
-
-const courses = JSON.parse(localStorage.getItem('courseList')) ?? {};
+let academicMaps = JSON.parse(localStorage.getItem('academicMaps')) || { programs: [] };
+let programs = academicMaps.programs.map(p => p.name);
+const courses = JSON.parse(localStorage.getItem('courseList')) ?? [];
 const electives = JSON.parse(localStorage.getItem('electivesList')) ?? {};
 
 function displayAcademicMap() {
@@ -32,7 +28,7 @@ function displayAcademicMap() {
 }
 
 function fetchPrograms() {
-    anyProgramsSaved = programs?.length ? true : false;
+    const anyProgramsSaved = programs.length > 0;
     if (anyProgramsSaved) {
         document.getElementById('programs-container').style.display = 'flex';
         document.getElementById('no-programs-found').style.display = 'none';
@@ -43,65 +39,27 @@ function fetchPrograms() {
     }
 }
 
-function createProgram(event) {
-    if (!programs.includes(event)) {
-        programs.push(event);
-        const newProgram =
-        {
-            name: `${event}`,
-            years:
-                [{
-                    "year": 1,
-                    "semesterFall": {
-                        "courses": [
-                        ]
-                    },
-                    "semesterSpring": {
-                        "courses": [
-                        ]
-                    }
-
-                },
-                {
-                    "year": 2,
-                    "semesterFall": {
-                        "courses": [
-                        ]
-                    },
-                    "semesterSpring": {
-                        "courses": [
-                        ]
-                    }
-                },
-                {
-                    "year": 3,
-                    "semesterFall": {
-                        "courses": [
-                        ]
-                    },
-                    "semesterSpring": {
-                        "courses": [
-                        ]
-                    }
-                },
-                {
-                    "year": 4,
-                    "semesterFall": {
-                        "courses": [
-                        ]
-                    },
-                    "semesterSpring": {
-                        "courses": [
-                        ]
-                    }
-                }]
+function createProgram() {
+    const programName = document.getElementById('programInput').value.trim();
+    if (programName && !programs.includes(programName)) {
+        programs.push(programName);
+        const newProgram = {
+            name: programName,
+            years: [
+                { year: 1, semesterFall: { courses: [] }, semesterSpring: { courses: [] } },
+                { year: 2, semesterFall: { courses: [] }, semesterSpring: { courses: [] } },
+                { year: 3, semesterFall: { courses: [] }, semesterSpring: { courses: [] } },
+                { year: 4, semesterFall: { courses: [] }, semesterSpring: { courses: [] } }
+            ]
         };
         academicMaps.programs.push(newProgram);
+        localStorage.setItem('programs', JSON.stringify(programs));
+        localStorage.setItem('academicMaps', JSON.stringify(academicMaps));
         fetchPrograms();
+    } else {
+        alert("Program name is either empty or already exists.");
     }
 }
-
-fetchPrograms();
 
 function populateCourseDropdown() {
     const yearSelect = document.getElementById('year-select');
@@ -123,8 +81,6 @@ function populateCourseDropdown() {
         const option = document.createElement('option');
         option.value = course.courseCode;
         option.textContent = `${course.courseCode} - ${course.courseName}`;
-        option.dataset.courseName = course.courseName;
-        option.dataset.credits = course.credits;
         courseSelect.appendChild(option);
     });
 }
@@ -133,12 +89,23 @@ function addCourseToAcademicMap() {
     const year = document.getElementById('year-select').value;
     const semester = document.getElementById('semester-select').value;
     const courseCode = document.getElementById('course-select').value;
-    const program = document.getElementsByClassName('nav-link active')[0].innerText;
+    const programName = document.querySelector('.nav-link.active').innerText;
 
-    const index = academicMaps.programs.findIndex(program => program.name === program)
-    academicMaps.programs[index].years.find(years => years.year == year)?.[`${semester}`].courses.push(courseCode);
+    const programIndex = academicMaps.programs.findIndex(p => p.name === programName);
+    if (programIndex !== -1) {
+        const yearData = academicMaps.programs[programIndex].years.find(y => y.year == year);
+        if (yearData && courseCode) {
+            yearData[semester].courses.push(courseCode);
+            localStorage.setItem('academicMaps', JSON.stringify(academicMaps));
+            alert("Course added successfully!");
+        } else {
+            alert("Please select a valid course.");
+        }
+    } else {
+        alert("Program not found.");
+    }
 }
+
 document.getElementById('year-select').addEventListener('change', populateCourseDropdown);
 document.getElementById('semester-select').addEventListener('change', populateCourseDropdown);
-
-
+document.addEventListener('DOMContentLoaded', fetchPrograms);
