@@ -93,6 +93,7 @@ document.addEventListener("DOMContentLoaded", function() {
                         <th>Course Code</th>
                         <th>Course Name</th>
                         <th>Credits</th>
+                        <th>Actions</th>
                     </tr>`;
                 } else {
                     headerContent = `<tr>
@@ -100,6 +101,7 @@ document.addEventListener("DOMContentLoaded", function() {
                         <th>Course Name</th>
                         <th>Credits</th>
                         <th>Total Credits</th>
+                        <th>Actions</th>
                     </tr>`;
                 }
                 thead.innerHTML = headerContent;
@@ -112,17 +114,25 @@ document.addEventListener("DOMContentLoaded", function() {
                     const course = courses.find(c => c.courseCode === courseCode);
                     if (course) {
                         const row = document.createElement('tr');
-                        row.innerHTML = `
-                            <td>${parseInt(year) + 1}</td>
-                            <td><a href="#" class="course-link" data-course-code="${course.courseCode}">${course.courseCode}</a></td>
-                            <td><a href="#" class="course-link" data-course-code="${course.courseCode}">${course.courseName}</a></td>
-                            <td>${course.credits}</td>`;
-                        semesterCredits += course.credits;
+
                         if (semester === 'semesterFall') {
+                            row.innerHTML = `
+                                <td>${parseInt(year) + 1}</td>
+                                <td><a href="#" class="course-link" data-course-code="${course.courseCode}">${course.courseCode}</a></td>
+                                <td><a href="#" class="course-link" data-course-code="${course.courseCode}">${course.courseName}</a></td>
+                                <td>${course.credits}</td>
+                                <td><button class="btn btn-danger btn-sm" onclick="deleteCourse('${year}', '${semester}', '${course.courseCode}')">Delete</button></td>`;
                             fallCredits += course.credits;
                         } else {
+                            row.innerHTML = `
+                                <td><a href="#" class="course-link" data-course-code="${course.courseCode}">${course.courseCode}</a></td>
+                                <td><a href="#" class="course-link" data-course-code="${course.courseCode}">${course.courseName}</a></td>
+                                <td>${course.credits}</td>
+                                <td></td> <!-- Placeholder for total credits row later -->
+                                <td><button class="btn btn-danger btn-sm" onclick="deleteCourse('${year}', '${semester}', '${course.courseCode}')">Delete</button></td>`;
                             springCredits += course.credits;
                         }
+                        semesterCredits += course.credits;
                         tbody.appendChild(row);
                     }
                 });
@@ -131,10 +141,11 @@ document.addEventListener("DOMContentLoaded", function() {
                 const totalRow = document.createElement('tr');
                 if (semester === 'semesterFall') {
                     totalRow.innerHTML = `<td colspan="3"><strong>Fall Total Credits</strong></td>
-                                          <td><strong>${fallCredits}</strong></td>`;
+                                          <td><strong>${fallCredits}</strong></td>
+                                          <td></td>`;
                 } else {
                     const totalYearCredits = fallCredits + springCredits;
-                    totalRow.innerHTML = `<td colspan="2"><strong>Spring Total Credits</strong></td>
+                    totalRow.innerHTML = `<td colspan="3"><strong>Spring Total Credits</strong></td>
                                           <td><strong>${springCredits}</strong></td>
                                           <td><strong>${totalYearCredits}</strong></td>`;
                 }
@@ -177,9 +188,19 @@ document.addEventListener("DOMContentLoaded", function() {
                 <p><strong>TCCNS Equivalent:</strong> ${course.details.tccnsEquivalent}</p>
                 <p><strong>Additional Fee:</strong> ${course.details.additionalFee ? "Yes" : "No"}</p>
             `;
-            // Show modal
             var myModal = new bootstrap.Modal(document.getElementById('courseModal'), {});
             myModal.show();
+        }
+    }
+
+    // Function to delete a course from the academic map
+    window.deleteCourse = function(year, semester, courseCode) {
+        const index = academicMap[year][semester].indexOf(courseCode);
+        if (index > -1) {
+            academicMap[year][semester].splice(index, 1);
+            updateLocalStorage();
+            displayAcademicMap();
+            updateCourseDropdown(); // Update dropdown after deleting a course
         }
     }
 
